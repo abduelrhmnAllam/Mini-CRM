@@ -27,14 +27,19 @@ class EmployeeController extends Controller
             return redirect()->route('admin.login')->with('error', 'يجب تسجيل الدخول كأدمن أولاً');
         }
 
+        // Validate request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:employees,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
-
+        // Create employee
         Employee::create([
             'admin_id' => auth('admin')->id(),
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-
         ]);
 
         return redirect()->route('employees.index')->with('success', 'تم إضافة الموظف بنجاح');
@@ -104,7 +109,7 @@ class EmployeeController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('123456789'), 
+            'password' => bcrypt('123456789'),
         ]);
 
         return redirect()->route('employee.customers')->with('success', 'تم إضافة العميل بنجاح');
