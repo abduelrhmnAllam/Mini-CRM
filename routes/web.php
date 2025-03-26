@@ -20,7 +20,12 @@ use Illuminate\Support\Facades\Route;
         Route::middleware(['auth:admin'])->group(function () {
             Route::get('/admin/dashboard', function () { return view('admin.dashboard'); })->name('admin.dashboard');
             Route::resource('employees', EmployeeController::class);
-            Route::resource('customers', CustomerController::class);
+            Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+            Route::get('/customers/add', [CustomerController::class, 'create'])->name('customers.create');
+            Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+            Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+            Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+            Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
             Route::post('customers/assign', [CustomerController::class, 'assign'])->name('customers.assign');
             Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
         });
@@ -61,7 +66,7 @@ use Illuminate\Support\Facades\Route;
       // User Routs
      Route::middleware(['auth:web'])->group(function () {
         Route::get('/dashboard', function () {return view('dashboard'); })->name('dashboard');
-    
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

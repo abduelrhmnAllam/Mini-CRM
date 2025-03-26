@@ -10,7 +10,7 @@
         <a href="{{ route('customers.create') }}" class="btn btn-primary">
             ➕ Add Customer
         </a>
-      
+
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover shadow-sm">
@@ -27,12 +27,12 @@
                         <td class="text-start">{{ $customer->name }}</td>
                         <td class="text-start">{{ $customer->employee->name ?? 'Not Assigned' }}</td>
                         <td class="text-center">
-                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-info btn-sm text-white shadow-sm">
                                 ✏️ Edit
                             </a>
                             <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
+                                <button type="submit" class="btn btn-danger btn-sm shadow-sm"
                                     onclick="return confirm('Are you sure you want to delete this customer?');">
                                     🗑️ Delete
                                 </button>
